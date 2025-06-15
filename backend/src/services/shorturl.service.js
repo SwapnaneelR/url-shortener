@@ -1,12 +1,13 @@
-import shorturlmodel from "../models/shorturl.model.js";
+import { saveshortUrl } from "../dao/short_url.js"; 
 import {get} from "../utils/helper.js";  
-export const shorturlservice = async (url) => {
+
+export const shorturlserviceWithoutUser = async (url) => {
   const shortUrl = get(7);
-  const newUrl = new shorturlmodel({
-    full_url: url,
-    short_url: shortUrl,
-    clicks: 0,
-  });
-  await newUrl.save();
-  return newUrl;
+   await saveshortUrl(shortUrl, url);
+  return shortUrl;
+};
+export const shorturlserviceWithUser = async (url,userId) => {
+  const shortUrl = get(7);
+   await saveshortUrl(shortUrl, url,userId);
+   return shortUrl;
 };
