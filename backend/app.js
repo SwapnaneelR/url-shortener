@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
 import express from "express";
+import cors from "cors";
 const app = express();
 
 import connectDB from "./src/config/mongo.config.js";
@@ -11,9 +12,9 @@ import shorturl_router from "./src/routes/shortUrls.routes.js";
 // Middleware to parse incoming requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
  
 app.use("/api/create", shorturl_router);
- 
 // app.get("/:id", async (req, res) => {
 //   const { id } = req.params;
 //   console.log("Received request for ID:", id);
@@ -42,10 +43,10 @@ app.get("/:id", async (req, res) => {
 
   try {
     const allData = await shorturlmodel.find();
-    console.log("All URLs in DB:", allData);
+    // console.log("All URLs in DB:", allData);
 
     const data = await shorturlmodel.findOne({ short_url: id });
-    console.log("Result of DB query:", data);
+    // console.log("Result of DB query:", data);
 
     if (!data) {
       return res.status(404).send("URL not found");
