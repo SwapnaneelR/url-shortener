@@ -8,45 +8,22 @@ const app = express();
 import connectDB from "./src/config/mongo.config.js";
 import shorturlmodel from "./src/models/shorturl.model.js";
 import shorturl_router from "./src/routes/shortUrls.routes.js";
-
-// Middleware to parse incoming requests
+import router from "./src/routes/auth.route.js";
+ 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
  
 app.use("/api/create", shorturl_router);
-// app.get("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   console.log("Received request for ID:", id);
+app.use("/api/auth", router);
 
-//   try {
-//     const data = await shorturlmodel.findOne({ short_url: id });
-//     if (!data) {
-//       return res.status(404).send("URL not found");
-//     }
-
-//     console.log("Data found:", data);
- 
-//     data.clicks = (data.clicks || 0) + 1;
-//     await data.save();
- 
-//     return res.redirect(data.full_url);
-//   } catch (err) {
-//     console.error("Error fetching URL:", err);
-//     return res.status(500).send("Server error");
-//   }
-// });
- 
 app.get("/:id", async (req, res) => {
   const { id } = req.params;
   console.log("Received request for ID:", id);
 
-  try {
-    const allData = await shorturlmodel.find();
-    // console.log("All URLs in DB:", allData);
+  try { 
 
-    const data = await shorturlmodel.findOne({ short_url: id });
-    // console.log("Result of DB query:", data);
+    const data = await shorturlmodel.findOne({ short_url: id }); 
 
     if (!data) {
       return res.status(404).send("URL not found");

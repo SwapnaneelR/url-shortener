@@ -1,9 +1,10 @@
 import { Button } from '../components/ui/button'
 import  Heading from "../components/Heading";
-import { useState } from 'react';
-import {Card} from '../components/Card';
+import { useState } from 'react'; 
 import axios from 'axios'; 
+
 const Home = () => {
+  const URL = import.meta.env.VITE_URL ;
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
@@ -17,7 +18,7 @@ const Home = () => {
   }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault(); 
-    const res = await axios.post("http://localhost:5000/api/create", {
+    const res = await axios.post(`${URL}/api/create`, {
       url : url
     });
     setUrl("");
@@ -87,7 +88,7 @@ const Home = () => {
 
 
         </div>
-      </main>
+    </main>
     </div>
   )
 }
