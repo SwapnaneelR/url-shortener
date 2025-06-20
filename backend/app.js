@@ -9,14 +9,20 @@ import connectDB from "./src/config/mongo.config.js";
 import shorturlmodel from "./src/models/shorturl.model.js";
 import shorturl_router from "./src/routes/shortUrls.routes.js";
 import router from "./src/routes/auth.route.js";
- 
+import cookieParser from "cookie-parser";
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
- 
+app.use(cookieParser());
+
 app.use("/api/create", shorturl_router);
 app.use("/api/auth", router);
-
+app.get("/test", (req, res) => {
+  const cookies = req.cookies;
+  console.log("Cookies: ", cookies);
+  res.send("Cookies received" + JSON.stringify(cookies));
+});
 app.get("/:id", async (req, res) => {
   const { id } = req.params;
   console.log("Received request for ID:", id);

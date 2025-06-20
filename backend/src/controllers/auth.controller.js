@@ -58,7 +58,8 @@ export const register = async (req, res) => {
                 id: newUser._id,
                 username: newUser.username,
                 email: newUser.email
-            }
+            },
+            message: 'Registration successful'
         });
     } catch (error) {
         console.error('Registration error:', error.message);
@@ -100,7 +101,8 @@ export const login = async (req, res) => {
                 id: user._id,
                 username: user.username,
                 email: user.email
-            }
+            },
+            message : 'Login successful'
         });
     } catch (error) {
         console.error('Login error:', error.message);
@@ -118,25 +120,3 @@ export const logout = (req, res) => {
     return res.status(200).json({ message: 'Logged out successfully' });
 };
 
-// Middleware to verify token from cookie
-export const verifyToken = async (req, res, next) => {
-    const token = req.cookies.token;
-    
-    if (!token) {
-        return res.status(401).json({ message: 'Unauthorized - No token provided' });
-    }
-
-    try {
-        const secret = process.env.JWT_SECRET;
-        if (!secret) {
-            throw new Error('JWT_SECRET is not defined');
-        }
-        
-        const decoded = jwt.verify(token, secret);
-        req.user = decoded;
-        next();
-    } catch (error) {
-        console.error('Token verification error:', error.message);
-        return res.status(401).json({ message: 'Unauthorized - Invalid token' });
-    }
-};
