@@ -15,7 +15,7 @@ const setTokenCookie = (res, token) => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Secure in production
-        sameSite: 'strict',
+        sameSite: 'Lax',
         maxAge: 3600000, // 1 hour in milliseconds
     });
 };
@@ -120,3 +120,24 @@ export const logout = (req, res) => {
     return res.status(200).json({ message: 'Logged out successfully' });
 };
 
+// ME 
+export const getMe = (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    try {
+        const secret = process.env.JWT_SECRET;
+        const decoded = jwt.verify(token, secret);
+        res.status(200).json({
+            user: {
+                id: decoded.id,
+                username: decoded.username,
+                email: decoded.email
+            }
+        });
+    } catch (err) {
+        res.status(401).json({ message: 'Invalid token' });
+    }
+};

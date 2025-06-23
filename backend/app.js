@@ -13,7 +13,10 @@ import cookieParser from "cookie-parser";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Adjust this to your frontend URL
+  credentials: true, // Allow cookies to be sent
+}));
 app.use(cookieParser());
 
 app.use("/api/create", shorturl_router);
