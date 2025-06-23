@@ -1,9 +1,10 @@
 import { Button } from '../components/ui/button'
 import  Heading from "../components/Heading";
-import { useState } from 'react';
-import {Card} from '../components/Card';
+import { useState } from 'react'; 
 import axios from 'axios'; 
+
 const Home = () => {
+  const URL = import.meta.env.VITE_URL ;
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
@@ -17,7 +18,7 @@ const Home = () => {
   }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault(); 
-    const res = await axios.post("http://localhost:5000/api/create", {
+    const res = await axios.post(`${URL}/api/create`, {
       url : url
     });
     setUrl("");
@@ -31,7 +32,7 @@ const Home = () => {
   }  
   return (
     <div>
-    <main className="flex flex-col items-center z-10 min-h-screen text-white px-4  pb-18">     
+    <main className="flex flex-col items-center z-10 min-h-screen text-white px-4  pb-10 pt-18">     
         <div className="mt-18   w-full max-w-xl">
           <span className="bg-gradient-to-r text-7xl font-bold mb-8 from-zinc-500 to-zinc-200 text-transparent bg-clip-text">
                   URL shortener
@@ -87,7 +88,7 @@ const Home = () => {
 
 
         </div>
-      </main>
+    </main>
     </div>
   )
 }
