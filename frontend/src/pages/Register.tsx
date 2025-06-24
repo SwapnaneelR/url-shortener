@@ -2,22 +2,20 @@ import { Button } from "../components/ui/button";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
     const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const { register } = useAuth();
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const res = await axios.post("http://localhost:5000/api/auth/register", {
-        username : name,
-      email,
-      password,
-    });
-    // alert(res.data.message);
-     if (res.data.user || res.data.message === "Login successful") {
-       navigate("/");
+    const res = await register(name, email, password);
+    if (res.success) {
+      navigate("/");
+    } else {
+      console.error(res.message);
     }
   }
   return (

@@ -20,6 +20,8 @@ const Home = () => {
     e.preventDefault(); 
     const res = await axios.post(`${URL}/api/create`, {
       url : url
+    },{
+      withCredentials: true,
     });
     setUrl("");
     if(res.data){
@@ -33,10 +35,20 @@ const Home = () => {
   return (
     <div>
     <main className="flex flex-col items-center z-10 min-h-screen text-white px-4  pb-10 pt-18">     
-        <div className="mt-18   w-full max-w-xl">
+<div className="w-full max-w-md mx-auto rounded-xl bg-black text-white p-2 m-5 shadow-lg border border-gray-700 flex flex-col items-center justify-center   text-center">
+  <div className="flex items-center  ">
+   
+  </div>
+  <p className="text-sm text-white/70">
+    Log in to start creating your own custom short URLs
+  </p>
+</div>
+
+        <div className="mt-12   w-full max-w-xl">
           <span className="bg-gradient-to-r text-7xl font-bold mb-8 from-zinc-500 to-zinc-200 text-transparent bg-clip-text">
                   URL shortener
           </span> 
+        
         <Heading />
 
           <form onSubmit={handleSubmit}

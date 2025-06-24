@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = async (): Promise<void> => {
     try {
-      await axios.get('http://localhost:5000/api/auth/logout', {
+      await axios.post('http://localhost:5000/api/auth/logout',{}, {
         withCredentials: true,
       });
       setUser(null);
