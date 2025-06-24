@@ -1,24 +1,19 @@
-import { verifyToken } from "../middleware/auth.middleware.js";
-import { shorturlserviceWithoutUser, shorturlserviceWithUser } from "../services/shorturl.service.js";
-
-// Route with verifyToken as middleware (optional if needed)
+import { shorturlserviceWithUser, shorturlserviceWithoutUser } from "../services/shorturl.service.js";
 export const shortUrlGenerator = async (req, res) => {
   try {
-    const { slug } = req.body;
-    const { url } = req.body;
+    const { slug, url } = req.body;
     console.log("long url", url);
 
-    const userId = req.user ? req.user._id : null; // set by middleware
+    const userId = req.user?._id;
+    console.log("User ID from request:", userId);
     let short_url;
 
     if (userId) {
-    
       console.log("User is logged in, generating user-specific short URL");
-      short_url = await shorturlserviceWithUser(url, slug,userId);
-    }
- 
-    if (!short_url) {
-      short_url = await shorturlserviceWithoutUser(url);
+      short_url = await shorturlserviceWithUser(url, slug, userId);
+    } else {
+      console.log("User is not logged in, generating public short URL");
+      short_url = await shorturlserviceWithoutUser(url,null,null);
     }
 
     return res.status(200).send(`${process.env.APP_ID}/${short_url}`);
