@@ -19,11 +19,14 @@ const Dashboard = () => {
 
   return (
     <div className="p-6 text-white">
+      {user ?
       <h1 className="text-5xl font-semibold my-10">
         {user?.username}'s URLs History
-      </h1>
+      </h1> : 
+      <p className="text-5xl font-semibold my-10">Login to Visit your dashboard</p>
+      }
       {urls.length === 0 ? (
-        <p>No data available.</p>
+        <p></p>
       ) : (
         <ul className="space-y-6 p-5">
           {urls.map((item, index) => (

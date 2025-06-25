@@ -57,7 +57,8 @@ export const register = async (req, res) => {
             user: {
                 id: newUser._id,
                 username: newUser.username,
-                email: newUser.email
+                email: newUser.email,
+                avatar : newUser.avatar
             },
             message: 'Registration successful'
         });
@@ -90,7 +91,7 @@ export const login = async (req, res) => {
         const token = generateToken({ 
             id: user._id, 
             username: user.username,
-            email: user.email 
+            email: user.email,
         });
 
         // Set cookie
@@ -100,7 +101,9 @@ export const login = async (req, res) => {
             user: {
                 id: user._id,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                
+                avatar: user.avatar 
             },
             message : 'Login successful'
         });
@@ -122,7 +125,7 @@ export const logout = (req, res) => {
 };
 
 // ME 
-export const getMe = (req, res) => {
+export const getMe = async (req, res) => {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({ message: 'Not authenticated' });
@@ -131,11 +134,13 @@ export const getMe = (req, res) => {
     try {
         const secret = process.env.JWT_SECRET;
         const decoded = jwt.verify(token, secret);
+        const user = await User.findById(decoded.id);
         res.status(200).json({
             user: {
-                id: decoded.id,
-                username: decoded.username,
-                email: decoded.email
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                avatar: user.avatar 
             }
         });
     } catch (err) {
