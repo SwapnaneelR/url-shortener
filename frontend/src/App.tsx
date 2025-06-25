@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import { useAuth } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import { Profile } from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
 
 function App() {   return (
     <div className="min-h-screen max-w-screen relative overflow-auto">
@@ -19,8 +20,8 @@ function App() {   return (
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/profile" element = {<Profile/>}/>
+            <Route path="/profile" element = {<Profile/>}/>
+            <Route path="/dashboard" element = {<Dashboard/>}/>
          </Routes>
 
         

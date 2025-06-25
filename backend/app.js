@@ -10,7 +10,7 @@ import shorturlmodel from "./src/models/shorturl.model.js";
 import shorturl_router from "./src/routes/shortUrls.routes.js";
 import router from "./src/routes/auth.route.js";
 import cookieParser from "cookie-parser";
-
+import dashboard_router from "./src/routes/dashboard.route.js";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
@@ -21,6 +21,8 @@ app.use(cookieParser());
 
 app.use("/api/create", shorturl_router);
 app.use("/api/auth", router);
+app.use("/api/dashboard",dashboard_router);
+
 app.get("/test", (req, res) => {
   const cookies = req.cookies;
   console.log("Cookies: ", cookies);
