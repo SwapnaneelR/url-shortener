@@ -52,10 +52,12 @@ app.get("/", (req, res) => {
   res.send("Welcome to the URL Shortener Service");
 });
  
+const port = process.env.PORT || 3002;
+
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(5000, () => {
+    app.listen(port, () => {
       console.log("Server is running on http://localhost:5000");
     });
   } catch (err) {
