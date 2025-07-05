@@ -1,20 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import { CardBody, CardContainer, CardItem } from "../components/ui/3d-card.tsx";
-import { useAuth } from "../context/AuthContext.tsx";
+import { CardBody, CardContainer, CardItem } from "../components/ui/3d-card";
+import { useAuth } from "../context/AuthContext";
+
+// Define the user structure (adjust if needed)
+type User = {
+  username: string;
+  email: string;
+  avatar?: string;
+};
 
 export function Profile() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth() as {
+    user: User | null;
+    logout: () => void;
+  };
+
   const navigate = useNavigate();
-  console.log("User in Profile:", user);
 
   return (
     <CardContainer className="inter-var">
       <CardBody className="relative bg-black p-10 text-white border border-3 border-white/20 w-auto sm:w-[30rem] h-auto rounded-xl shadow-lg">
- 
+
         {user?.avatar && (
           <CardItem className="absolute top-7 right-7">
             <img
-              src={user?.avatar}
+              src={user.avatar}
               alt="User Avatar"
               className="w-14 h-14 rounded-full object-cover border-2 border-white"
             />
@@ -30,11 +40,11 @@ export function Profile() {
         </CardItem>
 
         <div className="mt-8 space-y-2">
-          <CardItem translateZ="40" className="text-base text-lg">
-            <span className="font-semibold text-lg">Username :</span> {user?.username || "N/A"}
+          <CardItem translateZ="40" className="text-lg">
+            <span className="font-semibold">Username:</span> {user?.username || "N/A"}
           </CardItem>
-          <CardItem translateZ="40" className="text-base text-lg">
-            <span className="font-semibold text-lg">Email :</span> {user?.email || "N/A"}
+          <CardItem translateZ="40" className="text-lg">
+            <span className="font-semibold">Email:</span> {user?.email || "N/A"}
           </CardItem>
         </div>
 
