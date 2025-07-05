@@ -58,7 +58,7 @@ const startServer = async () => {
   try {
     await connectDB();
     app.listen(port, () => {
-      console.log("Server is running on http://localhost:5000");
+      console.log("Server is running on https://url-wheat-iota.vercel.app/");
     });
   } catch (err) {
     console.error("Failed to start server:", err);

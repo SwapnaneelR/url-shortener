@@ -6,7 +6,7 @@ const Dashboard = () => {
   const { user } = useAuth(); // Assuming you have a user context to get the current user
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/dashboard", {
+      .get("https://url-wheat-iota.vercel.app//api/dashboard", {
         withCredentials: true,
       })
       .then((response) => {
@@ -48,12 +48,12 @@ const Dashboard = () => {
               <p className="mt-2">
                 <strong>Short URL:</strong>{" "}
                 <a
-                  href={"http://localhost:5000/" + item?.short_url}
+                  href={"https://url-wheat-iota.vercel.app//" + item?.short_url}
                   className="text-green-400"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {"http://localhost:5000/" + item.short_url}
+                  {"https://url-wheat-iota.vercel.app//" + item.short_url}
                 </a>
               </p>
             </li>

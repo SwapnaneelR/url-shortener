@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const checkAuth = async () => {
       try {
         const res = await axios.get<{ user: User }>(
-          'http://localhost:5000/api/auth/me',
+          'https://url-wheat-iota.vercel.app//api/auth/me',
           {
             withCredentials: true,
           }
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ): Promise<{ success: boolean; message?: string }> => {
     try {
       const res = await axios.post<{ user: User }>(
-        'http://localhost:5000/api/auth/login',
+        'https://url-wheat-iota.vercel.app//api/auth/login',
         { email, password },
         { withCredentials: true }
       );
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ): Promise<{ success: boolean; message?: string }> => {
     try {
       const res = await axios.post<{ user: User }>(
-        'http://localhost:5000/api/auth/register',
+        'https://url-wheat-iota.vercel.app//api/auth/register',
         { username, email, password },
         { withCredentials: true }
       );
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = async (): Promise<void> => {
     try {
-      await axios.post('http://localhost:5000/api/auth/logout',{}, {
+      await axios.post('https://url-wheat-iota.vercel.app//api/auth/logout',{}, {
         withCredentials: true,
       });
       setUser(null);
