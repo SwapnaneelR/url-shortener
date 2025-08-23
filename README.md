@@ -23,7 +23,7 @@ ___________
 ### Schemas :
 
 ##### Short URL schema : 
-```json
+```
 const shorturlschema = new mongoose.Schema({
     full_url : {
         type : String,
@@ -48,7 +48,7 @@ const shorturlschema = new mongoose.Schema({
 
 
 #### User Schema : 
-```json
+```
 const userSchema = new mongoose.Schema({
   username: {    
     type: String,
