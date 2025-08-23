@@ -6,10 +6,12 @@ const router = Router();
 
 // Middleware that runs if token is present
 const optionalAuth = (req, res, next) => {
-  const token = req.cookies?.token || req.headers?.authorization?.split(" ")[1];
+  const authHeader = req.headers?.authorization;
+  const tokenFromHeader = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : authHeader;
+  const token = req.cookies?.token || tokenFromHeader;
   if (!token) return next(); // no token, skip auth
   // manually call verifyToken and let it populate req.user
-  verifyToken(req, res, next);
+  return verifyToken(req, res, next);
 };
 
 router.post("/", optionalAuth, shortUrlGenerator);

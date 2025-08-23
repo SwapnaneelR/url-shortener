@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://url-wheat-iota.vercel.app/api/dashboard", {
+      .get("http://localhost:3002/api/dashboard", {
         withCredentials: true,
       })
       .then((response) => {
@@ -59,12 +59,12 @@ const Dashboard = () => {
               <p className="mt-2">
                 <strong>Short URL:</strong>{" "}
                 <a
-                  href={`https://url-wheat-iota.vercel.app/${item.short_url}`}
+                  href={`http://localhost:3002/${item.short_url}`}
                   className="text-green-400"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {`https://url-wheat-iota.vercel.app/${item.short_url}`}
+                  {`http://localhost:3002/${item.short_url}`}
                 </a>
               </p>
             </li>

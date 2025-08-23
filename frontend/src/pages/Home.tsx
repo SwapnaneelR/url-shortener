@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext"; 
 const Home = () => {
-  const URL = import.meta.env.VITE_URL;
+  const URL = "http://localhost:3002"; 
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [slug, setSlug] = useState("");

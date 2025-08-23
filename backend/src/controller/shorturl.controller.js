@@ -1,22 +1,30 @@
 import { shorturlserviceWithUser, shorturlserviceWithoutUser } from "../services/shorturl.service.js";
+
 export const shortUrlGenerator = async (req, res) => {
   try {
     const { slug, url } = req.body;
-    console.log("long url", url);
+    if (!url) return res.status(400).json({ message: 'URL is required' });
 
     const userId = req.user?._id;
-    console.log("User ID from request:", userId);
-    let short_url;
+    let short_code;
 
-    if (userId) {
-      console.log("User is logged in, generating user-specific short URL");
-      short_url = await shorturlserviceWithUser(url, slug, userId);
-    } else {
-      console.log("User is not logged in, generating public short URL");
-      short_url = await shorturlserviceWithoutUser(url,null,null);
+    try {
+      if (userId) {
+        short_code = await shorturlserviceWithUser(url, slug, userId);
+      } else {
+        short_code = await shorturlserviceWithoutUser(url);
+      }
+    } catch (err) {
+      // Handle duplicate slug / DAO errors
+      if (err.code === 'DUPLICATE_SLUG' || (err.message && err.message.includes('Slug already in use'))) {
+        return res.status(409).json({ message: 'Slug already in use' });
+      }
+      console.error('Error in service/DAO:', err);
+      return res.status(500).json({ message: 'Internal server error' });
     }
 
-    return res.status(200).send(`${process.env.APP_ID}/${short_url}`);
+    // Return the full short URL string (frontend expects the string)
+    return res.status(200).send(`http://localhost:3002/${short_code}`);
   } catch (error) {
     console.error("Error generating short URL:", error);
     return res.status(500).json({ message: "Internal server error" });
