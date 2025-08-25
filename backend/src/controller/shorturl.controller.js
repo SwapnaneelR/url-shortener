@@ -23,8 +23,9 @@ export const shortUrlGenerator = async (req, res) => {
       return res.status(500).json({ message: 'Internal server error' });
     }
 
-    // Return the full short URL string (frontend expects the string)
-    return res.status(200).send(`http://localhost:3002/${short_code}`);
+  // Return the full short URL string (frontend expects the string)
+  // Hardcoded production frontend URL per request
+  return res.status(200).send(`https://shorturl-rust-xi.vercel.app/${short_code}`);
   } catch (error) {
     console.error("Error generating short URL:", error);
     return res.status(500).json({ message: "Internal server error" });
