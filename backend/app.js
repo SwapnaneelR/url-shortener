@@ -13,10 +13,19 @@ import cookieParser from "cookie-parser";
 import dashboard_router from "./src/routes/dashboard.route.js";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Allow production frontend origin and credentials. Hardcoded per request.
 app.use(cors({
-  origin: "http://localhost:5173", // Adjust this to your frontend URL
-  credentials: true, // Allow cookies to be sent
+  origin: "https://shorturl-rust-xi.vercel.app",
+  credentials: true,
 }));
+
+// Explicitly set CORS headers as an extra safeguard (hardcoded production origin)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://shorturl-rust-xi.vercel.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use(cookieParser());
 
 app.use("/api/create", shorturl_router);
