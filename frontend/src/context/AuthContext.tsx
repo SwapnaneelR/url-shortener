@@ -1,11 +1,11 @@
-import React, {
+import {
   createContext,
   useState,
   useEffect,
   useContext,
+  type ReactNode,
 } from 'react';
-import type {ReactNode} from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 
 // User type
 interface User {
@@ -44,12 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get<{ user: User }>(
-          'http://localhost:3002/api/auth/me',
-          {
-            withCredentials: true,
-          }
-        );
+  const res = await api.get<{ user: User }>('/api/auth/me');
         setUser(res.data.user);
         // console.log('User authenticated:', res.data.user);
       } catch (err) {
@@ -66,11 +61,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     password: string
   ): Promise<{ success: boolean; message?: string }> => {
     try {
-      const res = await axios.post<{ user: User }>(
-        'http://localhost:3002/api/auth/login',
-        { email, password },
-        { withCredentials: true }
-      );
+  const res = await api.post<{ user: User }>('/api/auth/login', { email, password });
       setUser(res.data.user);
       return { success: true };
     } catch (err: any) {
@@ -87,11 +78,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     password: string
   ): Promise<{ success: boolean; message?: string }> => {
     try {
-      const res = await axios.post<{ user: User }>(
-        'http://localhost:3002/api/auth/register',
-        { username, email, password },
-        { withCredentials: true }
-      );
+  const res = await api.post<{ user: User }>('/api/auth/register', { username, email, password });
       setUser(res.data.user);
       return { success: true };
     } catch (err: any) {
@@ -104,9 +91,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = async (): Promise<void> => {
     try {
-      await axios.post('http://localhost:3002/api/auth/logout',{}, {
-        withCredentials: true,
-      });
+  await api.post('/api/auth/logout');
       setUser(null);
     } catch (err) {
       console.error('Logout error:', err);

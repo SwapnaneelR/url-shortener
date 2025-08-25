@@ -1,12 +1,13 @@
-import React, {
+import {
   useRef,
   useEffect,
   useState,
   createContext,
   useContext,
-  ReactNode,
-  ElementType,
-  HTMLAttributes,
+  type ReactNode,
+  type ElementType,
+  type HTMLAttributes,
+  createElement,
 } from "react";
 import { cn } from "@/lib/utils"; // Ensure this util exists
 
@@ -26,7 +27,7 @@ export const CardContainer = ({
   className,
   containerClassName,
 }: {
-  children: ReactNode;
+  children: ReactNode | null;
   className?: string;
   containerClassName?: string;
 }) => {
@@ -60,7 +61,7 @@ export const CardBody = ({
   className,
   animate = true,
 }: {
-  children: ReactNode;
+  children: ReactNode | null;
   className?: string;
   animate?: boolean;
 }) => {
@@ -105,14 +106,14 @@ export const CardItem = <T extends HTMLElement>({
   ...rest
 }: {
   as?: ElementType;
-  children: ReactNode;
+  children: ReactNode | null;
   className?: string;
-  translateX?: number;
-  translateY?: number;
-  translateZ?: number;
-  rotateX?: number;
-  rotateY?: number;
-  rotateZ?: number;
+  translateX?: number | string;
+  translateY?: number | string;
+  translateZ?: number | string;
+  rotateX?: number | string;
+  rotateY?: number | string;
+  rotateZ?: number | string;
 } & HTMLAttributes<T>) => {
   const Component = as || "div";
   const ref = useRef<T>(null);
@@ -120,20 +121,26 @@ export const CardItem = <T extends HTMLElement>({
 
   useEffect(() => {
     if (!ref.current) return;
+    const tx = Number(translateX) || 0;
+    const ty = Number(translateY) || 0;
+    const tz = Number(translateZ) || 0;
+    const rx = Number(rotateX) || 0;
+    const ry = Number(rotateY) || 0;
+    const rz = Number(rotateZ) || 0;
     if (isMouseEntered) {
-      ref.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+      ref.current.style.transform = `translateX(${tx}px) translateY(${ty}px) translateZ(${tz}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
     } else {
       ref.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
     }
   }, [isMouseEntered, translateX, translateY, translateZ, rotateX, rotateY, rotateZ]);
 
-  return (
-    <Component
-      ref={ref}
-      className={cn("transition duration-500 ease-linear", className)}
-      {...rest}
-    >
-      {children}
-    </Component>
+  return createElement(
+    Component as any,
+    {
+      ref: ref as any,
+      className: cn("transition duration-500 ease-linear", className as any),
+      ...(rest as any),
+    },
+    children,
   );
 };

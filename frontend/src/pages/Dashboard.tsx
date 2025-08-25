@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from '@/lib/api';
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -13,10 +13,8 @@ const Dashboard = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3002/api/dashboard", {
-        withCredentials: true,
-      })
+    api
+      .get('/api/dashboard')
       .then((response) => {
         setUrls(response.data.data); // Make sure your backend returns { data: UrlItem[] }
       })
@@ -59,12 +57,12 @@ const Dashboard = () => {
               <p className="mt-2">
                 <strong>Short URL:</strong>{" "}
                 <a
-                  href={`http://localhost:3002/${item.short_url}`}
+                  href={`https://shorturl-rust-xi.vercel.app/${item.short_url}`}
                   className="text-green-400"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {`http://localhost:3002/${item.short_url}`}
+                  {`https://shorturl-rust-xi.vercel.app/${item.short_url}`}
                 </a>
               </p>
             </li>

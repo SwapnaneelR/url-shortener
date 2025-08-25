@@ -31,19 +31,19 @@ export function Profile() {
           </CardItem>
         )}
 
-        <CardItem translateZ="50" className="text-2xl font-bold">
+  <CardItem translateZ={50} className="text-2xl font-bold">
           Profile
         </CardItem>
 
-        <CardItem translateZ="60" className="text-neutral-300 text-sm max-w-sm mt-2">
+  <CardItem translateZ={60} className="text-neutral-300 text-sm max-w-sm mt-2">
           Welcome to your Profile!
         </CardItem>
 
         <div className="mt-8 space-y-2">
-          <CardItem translateZ="40" className="text-lg">
+          <CardItem translateZ={40} className="text-lg">
             <span className="font-semibold">Username:</span> {user?.username || "N/A"}
           </CardItem>
-          <CardItem translateZ="40" className="text-lg">
+          <CardItem translateZ={40} className="text-lg">
             <span className="font-semibold">Email:</span> {user?.email || "N/A"}
           </CardItem>
         </div>

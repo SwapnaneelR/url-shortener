@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import { useContext } from "react";
 import ThemeConext from "./main";
 function App() {    
-  const {theme,changeTheme} = useContext(ThemeConext);
+  const { theme, changeTheme } = useContext(ThemeConext);
   console.log(theme)
   changeTheme(theme)
   return (

@@ -1,8 +1,9 @@
-import React from "react";
+// React default import not required in recent JSX transforms
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { memo } from 'react';
 
-export const BackgroundBeams = React.memo(
+export const BackgroundBeams = memo(
   ({ className }: { className?: string }) => {
     const paths = [
       "M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875",
@@ -88,7 +89,7 @@ export const BackgroundBeams = React.memo(
             ></motion.path>
           ))}
           <defs>
-            {paths.map((path, index) => (
+            {paths.map((_, index) => (
               <motion.linearGradient
                 id={`linearGradient-${index}`}
                 key={`gradient-${index}`}

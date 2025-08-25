@@ -1,10 +1,10 @@
 import { Button } from "../components/ui/button";
 import Heading from "../components/Heading";
 import { useState } from "react";
-import axios from "axios";
+import api from '@/lib/api';
 import { useAuth } from "@/context/AuthContext"; 
 const Home = () => {
-  const URL = "http://localhost:3002"; 
+  const FRONTEND = 'https://shorturl-rust-xi.vercel.app';
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [slug, setSlug] = useState("");
@@ -20,15 +20,12 @@ const Home = () => {
   }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const res = await axios.post(
-      `${URL}/api/create`,
+    const res = await api.post('/api/create',
       {
         url: url,
         slug: slug || undefined, 
       },
-      {
-        withCredentials: true,
-      }
+      {}
     );
     setUrl("");
     setSlug("");
@@ -94,7 +91,7 @@ const Home = () => {
                 {/* Main Content */}
                 <div className="relative z-10 flex flex-row gap-40">
                   <a
-                    href={shortUrl}
+                    href={shortUrl || FRONTEND}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-zinc-400 text-xl font-semibold hover:underline break-words"
