@@ -1,6 +1,3 @@
-// "use client";
-
-import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -43,12 +40,14 @@ export default function Screenshot({
   }
 
   return (
-    <Image
+    // Use a standard img tag so this component works in plain React apps
+    <img
       src={src}
       alt={alt}
       width={width}
       height={height}
       className={className}
+      style={{ width, height }}
     />
   );
 }

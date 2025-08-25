@@ -1,5 +1,4 @@
-"use client";
-import React, { use } from "react";
+// React import not required in newer JSX runtimes
 import { cn } from "@/lib/utils";
 import { useAuth } from "../../context/AuthContext";
 import type { JSX } from "react";

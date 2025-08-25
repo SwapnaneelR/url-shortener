@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -79,10 +78,10 @@ export const BackgroundBeams = React.memo(
             strokeWidth="0.5"
           ></path>
 
-          {paths.map((path, index) => (
+      {paths.map((_, index) => (
             <motion.path
               key={`path-` + index}
-              d={path}
+        d={paths[index]}
               stroke={`url(#linearGradient-${index})`}
               strokeOpacity="0.4"
               strokeWidth="0.5"

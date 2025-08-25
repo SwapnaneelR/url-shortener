@@ -5,9 +5,14 @@ import Register from "./pages/Register";
 import Home from "./pages/Home"; 
 import Navbar from "./components/Navbar";
 import { Profile } from "./pages/Profile";
-import Dashboard from "./pages/Dashboard";
-
-function App() {   return (
+import Dashboard from "./pages/Dashboard"; 
+import { useContext } from "react";
+import ThemeConext from "./main";
+function App() {    
+  const {theme,changeTheme} = useContext(ThemeConext);
+  console.log(theme)
+  changeTheme(theme)
+  return (
     <div className="min-h-screen max-w-screen relative overflow-auto">
  
       <div className="absolute inset-0 z-0 min-h-screen w-full [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]" />

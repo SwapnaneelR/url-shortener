@@ -1,4 +1,3 @@
-// "use client";
 import { ContainerTextFlip } from "@/components/ui/container-text-flip";
 import { motion } from "motion/react";
 import { cn } from "../lib/utils";
