@@ -2,8 +2,10 @@ import { Button } from "../components/ui/button";
 import Heading from "../components/Heading";
 import { useState } from "react";
 import api from '@/lib/api';
+import { BACKEND } from '@/lib/api';
 import { useAuth } from "@/context/AuthContext"; 
 const Home = () => {
+  // Use the backend origin when displaying the generated short URL.
   const FRONTEND = 'https://shorturl-rust-xi.vercel.app';
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
@@ -91,12 +93,12 @@ const Home = () => {
                 {/* Main Content */}
                 <div className="relative z-10 flex flex-row gap-40">
                   <a
-                    href={shortUrl || FRONTEND}
+                    href={(shortUrl && (shortUrl.startsWith('http') ? shortUrl : `${BACKEND}/${shortUrl}`)) || FRONTEND}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-zinc-400 text-xl font-semibold hover:underline break-words"
                   >
-                    {shortUrl}
+                    {shortUrl && (shortUrl.startsWith('http') ? shortUrl : `${BACKEND}/${shortUrl}`)}
                   </a>
 
                   <Button

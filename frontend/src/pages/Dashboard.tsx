@@ -1,4 +1,5 @@
 import api from '@/lib/api';
+import { BACKEND } from '@/lib/api';
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -57,12 +58,12 @@ const Dashboard = () => {
               <p className="mt-2">
                 <strong>Short URL:</strong>{" "}
                 <a
-                  href={`https://shorturl-rust-xi.vercel.app/${item.short_url}`}
+                  href={(item.short_url.startsWith('http') ? item.short_url : `${BACKEND}/${item.short_url}`)}
                   className="text-green-400"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {`https://shorturl-rust-xi.vercel.app/${item.short_url}`}
+                  {item.short_url.startsWith('http') ? item.short_url : `${BACKEND}/${item.short_url}`}
                 </a>
               </p>
             </li>
